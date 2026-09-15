@@ -1,23 +1,20 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<title>Carta del restaurante</title>
-</head>
-<body>
-	<h1>Carta del restaurante</h1>
+{% extends 'base.html' %}
 
-	<p>Precio promedio: ${{ precio_promedio }}</p>
-	<p>Platos vegetarianos: {{ cantidad_vegetarianos }}</p>
+{% block titulo %}Inicio | Carta del restaurante{% endblock %}
 
-	<h2>Platos disponibles</h2>
-	<ul>
-		{% for plato in platos %}
-			<li>
-				<a href="{% url 'detalle' plato.id %}">{{ plato.nombre }}</a>
-				- {{ plato.categoria }} - ${{ plato.precio }}
-			</li>
-		{% endfor %}
-	</ul>
-</body>
-</html>
+{% block contenido %}
+    <h2>Platos disponibles</h2>
+    <p>Precio promedio: ${{ precio_promedio }}</p>
+    <p>Platos vegetarianos: {{ cantidad_vegetarianos }}</p>
+
+    <ul>
+        {% for p in platos %}
+            <li>
+                <a href="{% url 'app:detalle' p.id %}">{{ p.nombre|upper }}</a>
+                - {{ p.categoria|lower }} - ${{ p.precio }}
+            </li>
+        {% empty %}
+            <li>No hay platos disponibles.</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

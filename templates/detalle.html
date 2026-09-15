@@ -1,1 +1,18 @@
+{% extends 'base.html' %}
+
+{% block titulo %}{{ plato.nombre }} | Carta del restaurante{% endblock %}
+
+{% block contenido %}
+	<h2>{{ plato.nombre }}</h2>
+	<p>ID: {{ plato.id }}</p>
+	<p>Descripción: {{ plato.descripcion }}</p>
+	<p>Categoría: {{ plato.categoria }}</p>
+	<p>Precio: ${{ plato.precio }}</p>
+	<p>Tiempo de preparación: {{ plato.tiempo }} minutos</p>
+	<p>Picante: {{ plato.picante|yesno:"Sí,No" }}</p>
+	<p>Vegetariano: {{ plato.vegetariano|yesno:"Sí,No" }}</p>
+	<p>Precio con propina del 10%: ${{ precio_con_propina }}</p>
+	<p>Etiqueta: {{ etiqueta }}</p>
+	<p><a href="{% url 'app:inicio' %}">Volver a la portada</a></p>
+{% endblock %}
 detalle

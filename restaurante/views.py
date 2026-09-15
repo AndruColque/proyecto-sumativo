@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.shortcuts import render
 
 def inicio(request):
@@ -12,8 +13,30 @@ def inicio(request):
     return render(request, 'inicio.html', contexto)
 
 def detalle(request, id):
-    plato = next((plato for plato in PLATOS if plato["id"] == id), None)
-    return render(request, 'detalle.html', {'plato': plato})
+    plato = None
+    for plato_lista in PLATOS:
+        if plato_lista["id"] == id:
+            plato = plato_lista
+            break
+
+    if plato is None:
+        raise Http404("El plato no existe")
+
+    precio_con_propina = round(plato["precio"] * 1.10)
+
+    if plato["vegetariano"] and not plato["picante"]:
+        etiqueta = "Apto para todos"
+    elif plato["picante"]:
+        etiqueta = "Contiene aji"
+    else:
+        etiqueta = "Plato tradicional"
+
+    contexto = {
+        "plato": plato,
+        "precio_con_propina": precio_con_propina,
+        "etiqueta": etiqueta,
+    }
+    return render(request, 'detalle.html', contexto)
 
 PLATOS = [
     {"id": 1, "nombre": "Ceviche de reineta", "categoria": "Entrada", "precio": 8900,
