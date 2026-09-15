@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Carta del restaurante</title>
+</head>
+<body>
+	<h1>Carta del restaurante</h1>
+
+	<p>Precio promedio: ${{ precio_promedio }}</p>
+	<p>Platos vegetarianos: {{ cantidad_vegetarianos }}</p>
+
+	<h2>Platos disponibles</h2>
+	<ul>
+		{% for plato in platos %}
+			<li>
+				<a href="{% url 'detalle' plato.id %}">{{ plato.nombre }}</a>
+				- {{ plato.categoria }} - ${{ plato.precio }}
+			</li>
+		{% endfor %}
+	</ul>
+</body>
+</html>
